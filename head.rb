@@ -1,0 +1,2 @@
+class Head
+end
