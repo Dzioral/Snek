@@ -1,18 +1,18 @@
+# frozen_string_literal: true
+
 class Apple
   def initialize(grid)
     @grid = grid
+    @name = 'apple'
   end
 
-  attr_accessor :x, :y, :apple_square
+  attr_accessor :x, :y, :name
 
   def spawn
-    @x = @grid.possible_possitions_x.sample
-    @y = @grid.possible_possitions_y.sample
-    @size = @grid.grid_square_size - 1
-    @apple_square = Square.new(x: @x, y: @y, size: @size, color: 'red')
-  end
-
-  def remove
-    @apple_square.remove unless @apple_square.nil?
+    arr_x = *(0...@grid.length_x)
+    arr_y = *(0...@grid.length_y)
+    @x = arr_x.sample
+    @y = arr_y.sample
+    spawn if @grid.grid[x][y] == 'tail' || @grid.grid[x][y] == 'head'
   end
 end

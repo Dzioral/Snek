@@ -1,27 +1,20 @@
 # frozen_string_literal: true
 
 class Tail
-  def initialize(x, y, size, score)
-    @x = x
-    @y = y
-    @size = size - 1
-    @life_time = score + 10
-    @tail_square = Square.new(x: @x, y: @y, size: @size, color: 'white')
+  def initialize
+    @squares = []
   end
 
-  attr_accessor :life_time, :tail_square, :x, :y
+  attr_accessor :squares
 
-  def update_life_time
-    self.life_time -= 1 unless life_time == 1
-    self.life_time = 1 unless self.life_time > 1
-    purge if life_time == 1
+  def update
+    @squares.each do |s|
+      s.update_life_time
+      @squares.delete(s) if s.life_time.zero?
+    end
   end
 
   def purge
-    tail_square.remove
-    # p tail_square
+    @squares = []
   end
 end
-
-
-
