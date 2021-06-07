@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Screen
-  def initialize(grid, _width, _height)
+  def initialize(grid)
     @grid = grid
     @square_size = 15
     @grid_start_x = 50
@@ -16,7 +16,7 @@ class Screen
     y = *(0...@grid.length_y)
     x.each do |grid_x|
       y.each do |grid_y|
-        draw_square(@grid.grid[grid_x][grid_y], grid_x, grid_y) unless (@grid.grid[grid_x][grid_y]) == 0
+        draw_square(@grid.grid[grid_x][grid_y], grid_x, grid_y) unless (@grid.grid[grid_x][grid_y]).nil?
       end
     end
   end

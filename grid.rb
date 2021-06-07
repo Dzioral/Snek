@@ -4,13 +4,13 @@ class Grid
   def initialize
     @length_x = 40
     @length_y = 40
-    @grid = Array.new(@length_x) { Array.new(length_y) { 0 } }
+    @grid = Array.new(@length_x) { Array.new(length_y) }
   end
 
   attr_accessor :length_x, :length_y, :grid
 
   def cleanup
-    self.grid = Array.new(@length_x) { Array.new(length_y) { 0 } }
+    self.grid = Array.new(@length_x) { Array.new(length_y) }
   end
 
   def update(head, tail, apple)

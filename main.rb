@@ -28,7 +28,7 @@ set resizable: true
 @apple = Apple.new(@grid)
 @tail = Tail.new
 @reset = Reset.new
-@screen = Screen.new(@grid, width, height)
+@screen = Screen.new(@grid)
 
 on :key_down do |event|
   if can_and_pressed_a(event.key) == true
@@ -49,6 +49,7 @@ on :key_down do |event|
     @button_pressed = true
   elsif can_and_pressed_reset(event.key)
     @game_is_on = @reset.run(@tail, @grid, @head, @apple)
+    @score = 0
   end
 end
 
@@ -73,31 +74,31 @@ def can_and_pressed_reset(event_key)
 end
 
 update do
-  if @game_is_on == true
-    sleep @time_between_frames
+  next unless @game_is_on == true
 
-    @tail.update
-    @grid.update(@head, @tail, @apple)
-    @screen.remove_squares
-    @screen.draw_objects_in_grid
-    @head.update
-    @tail.squares << TailSquare.new(
-      @head.x - @head.speed_x,
-      @head.y - @head.speed_y,
-      @score
-    )
-    if @head.ate_apple == true
-      @score += 1
-      @apple.spawn
-      @tail.squares.each do |t|
-        t.life_time += 1
-      end
+  sleep @time_between_frames
+
+  @tail.update
+  @grid.update(@head, @tail, @apple)
+  @screen.remove_squares
+  @screen.draw_objects_in_grid
+  @head.update
+  @tail.squares << TailSquare.new(
+    @head.x - @head.speed_x,
+    @head.y - @head.speed_y,
+    @score
+  )
+  if @head.ate_apple == true
+    @score += 1
+    @apple.spawn
+    @tail.squares.each do |t|
+      t.life_time += 1
     end
-
-    @game_is_on = false if @head.movement_valid == false
-
-    @button_pressed = false
   end
+
+  @game_is_on = false if @head.movement_valid == false
+
+  @button_pressed = false
 end
 
 show

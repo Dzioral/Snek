@@ -7,7 +7,6 @@ class Reset
     head.reset
     grid.update_object(head)
     apple.spawn
-
     true
   end
 end
